@@ -1661,6 +1661,26 @@
   }
 
   var gameRules = {
+    'betwave': {
+        'cardsInHand': 5,
+        'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
+        'wildValue': 'O',
+        'wildStatus': 1,
+        'wheelStatus': 0,
+        'sfQualify': 5,
+        'lowestQualified': null,
+        "noKickers": true
+    },
+    'betwaveCompare': {
+        'cardsInHand': 5,
+        'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
+        'wildValue': 'O',
+        'wildStatus': 1,
+        'wheelStatus': 0,
+        'sfQualify': 5,
+        'lowestQualified': null,
+        "noKickers": false
+    },
     'standard': {
       'cardsInHand': 5,
       'handValues': [StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
