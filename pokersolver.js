@@ -25,6 +25,18 @@
       return this.wildValue.replace('T', '10') + this.suit;
     }
 
+    suitRank()
+    {
+      switch (this.suit)
+      {
+          case 's': return 4;
+          case 'h': return 3;
+          case 'd': return 2;
+          case 'c': return 1;
+          default: throw  `unexpected suit: ${this.suit}`;
+      }
+    }
+
     static sort(a, b) {
       if (a.rank > b.rank) {
         return -1;
@@ -47,6 +59,7 @@
       this.values = [];
       this.wilds = [];
       this.selected = [];
+      this.kickers = [];
       this.ranking = [];
       this.name = name;
       this.game = game;
@@ -118,6 +131,8 @@
       }
 
       var result = 0;
+
+      // rank
       for (var i=0; i<=4; i++) {
         if (this.cards[i] && a.cards[i] && this.cards[i].rank < a.cards[i].rank) {
           result = 1;
@@ -125,6 +140,32 @@
         } else if (this.cards[i] && a.cards[i] && this.cards[i].rank > a.cards[i].rank) {
           result = -1;
           break;
+        }
+      }
+
+      // suit
+      if (result === 0) {
+        // safety check
+        if (this.rank !== a.rank || this.name !== a.name) {
+            throw `unequal hands selected for suit comparison: [${this.descr}] and [${a.descr}]`
+        }
+
+        var thisCards = this.kickers.length === 0 ? this.cards : this.kickers;
+        var aCards = a.kickers.length === 0 ? a.cards : a.kickers;
+
+        // safety check
+        if (thisCards.length !== aCards.length) {
+          throw `unequal amount of cards for suit comparison: [${thisCards.length}] and [${aCards.length}]`;
+        }
+
+        for (var i = 0; i < thisCards.length; i++) {
+          if (thisCards[i] && aCards[i] && thisCards[i].suitRank() < aCards[i].suitRank()) {
+            result = 1;
+            break;
+          } else if (thisCards[i] && aCards[i] && thisCards[i].suitRank() > aCards[i].suitRank()) {
+            result = -1;
+            break;
+          }
         }
       }
 
@@ -605,6 +646,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(4, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -632,6 +674,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(4, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -1112,6 +1155,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(3, this.game.cardsInHand);
 
       if (this.cards.length >= 3) {
         if (this.game.noKickers) {
@@ -1252,6 +1296,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(4, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -1295,6 +1340,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(2, this.game.cardsInHand);
 
       if (this.cards.length >= 2) {
         if (this.game.noKickers) {
@@ -1327,6 +1373,7 @@
       }
 
       this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.kickers = this.cards.slice(1, this.game.cardsInHand);
 
       if (this.game.noKickers) {
         this.cards.length = 1;
@@ -1715,24 +1762,24 @@
 
   var gameRules = {
     'betwave': {
-        'cardsInHand': 5,
-        'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
-        'wildValue': 'O',
-        'wildStatus': 1,
-        'wheelStatus': 0,
-        'sfQualify': 5,
-        'lowestQualified': null,
-        "noKickers": true
+      'cardsInHand': 5,
+      'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
+      'wildValue': 'O',
+      'wildStatus': 1,
+      'wheelStatus': 0,
+      'sfQualify': 5,
+      'lowestQualified': null,
+      "noKickers": true
     },
     'betwaveCompare': {
-        'cardsInHand': 5,
-        'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
-        'wildValue': 'O',
-        'wildStatus': 1,
-        'wheelStatus': 0,
-        'sfQualify': 5,
-        'lowestQualified': null,
-        "noKickers": false
+      'cardsInHand': 5,
+      'handValues': [NaturalRoyalFlush, FiveOfAKind, WildRoyalFlush, StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, OnePair, HighCard],
+      'wildValue': 'O',
+      'wildStatus': 1,
+      'wheelStatus': 0,
+      'sfQualify': 5,
+      'lowestQualified': null,
+      "noKickers": false
     },
     'standard': {
       'cardsInHand': 5,
