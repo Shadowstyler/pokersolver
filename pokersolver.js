@@ -46,8 +46,8 @@
       this.suits = {};
       this.values = [];
       this.wilds = [];
-      this.selectedCards = [];
-      this.qualifiedCards = [];
+      this.selected = [];
+      this.ranking = [];
       this.name = name;
       this.game = game;
       this.sfLength = 0;
@@ -395,8 +395,8 @@
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + suit + ' High';
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= this.game.sfQualify;
     }
@@ -411,8 +411,8 @@
       this.resetWildCards();
       var result = super.solve();
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return result && this.descr === 'Royal Flush';
     }
@@ -440,8 +440,8 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return result;
     }
@@ -469,8 +469,8 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return result;
     }
@@ -506,8 +506,8 @@
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + '\'s';
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 5;
     }
@@ -604,7 +604,7 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -614,7 +614,7 @@
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + '\'s';
       }
 
-      this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 4;
     }
@@ -631,7 +631,7 @@
         this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-4));
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -641,7 +641,7 @@
         this.descr = this.name;
       }
 
-      this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 4;
     }
@@ -788,8 +788,8 @@
         this.descr = this.name + ', ' + type;
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 5;
     }
@@ -820,8 +820,8 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= this.game.sfQualify;
     }
@@ -917,8 +917,8 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
-      this.qualifiedCards = new Array(...this.cards);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= this.game.sfQualify;
     }
@@ -1111,7 +1111,7 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.cards.length >= 3) {
         if (this.game.noKickers) {
@@ -1121,7 +1121,7 @@
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + '\'s';
       }
 
-      this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 3;
     }
@@ -1251,7 +1251,7 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.cards.length >= 4) {
         if (this.game.noKickers) {
@@ -1262,7 +1262,7 @@
         this.descr = this.name + ', ' + type;
       }
 
-      this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 4;
     }
@@ -1294,7 +1294,7 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.cards.length >= 2) {
         if (this.game.noKickers) {
@@ -1304,7 +1304,7 @@
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + '\'s';
       }
 
-        this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return this.cards.length >= 2;
     }
@@ -1326,7 +1326,7 @@
         }
       }
 
-      this.selectedCards = this.cards.slice(0, this.game.cardsInHand);
+      this.selected = this.cards.slice(0, this.game.cardsInHand);
 
       if (this.game.noKickers) {
         this.cards.length = 1;
@@ -1335,7 +1335,7 @@
       this.cards = this.cards.sort(Card.sort);
       this.descr = this.cards[0].toString().slice(0, -1) + ' High';
 
-      this.qualifiedCards = new Array(...this.cards);
+      this.ranking = new Array(...this.cards);
 
       return true;
     }
